@@ -20,6 +20,38 @@ class Contact{
         this.email=email;
     }
 
+    
+    getDetails():string{
+        return `${this.firstName} ${this.lastName} - ${this.address}, ${this.city}, ${this.state},${this.zip} ,${this.phoneNo}, ${this.email}`;
+        }
+
+    firstAndLastName():string{
+        return `${this.firstName} ${this.lastName}`;
+    }
+    getFirstName():string{
+        return this.firstName;
+    }
+    getLastName():string{
+        return this.lastName;
+    }
+    getAddress():string{
+        return this.address;
+    }
+    getCity():string{
+        return this.city;
+    }
+    getState():string{
+        return this.state;
+    }
+    getZip():number{
+        return this.zip;
+    }
+    getPhoneNo():number{
+        return this.phoneNo;
+    }
+    getEmail():string|number{
+        return this.email;
+    }
        
 
 }

@@ -22,18 +22,66 @@ class AddressBookMain{
 
      }
     
+     private editContact():void{
+
+        const contactName=readlineSync.question("Please enter first and last name: ");
+        const contact = this.addressbook.searchFirstAndLastName(contactName);
+
+        if(contact){
+        const newFirstName = readlineSync.question("Enter new first name: ")|| contact.getFirstName;
+        const newLastname = readlineSync.question("Enter new last name: ")||contact.getLastName;
+        const newAddress = readlineSync.question("Enter new Address: ")||contact.getAddress;
+        const newCity = readlineSync.question("Enter new City: ")||contact.getCity;
+        const newState = readlineSync.question("Enter new State: ")||contact.getState;
+        const newZip = readlineSync.question("Enter new Zip: ")||contact.getZip;
+        const newPhoneNo = readlineSync.question("Enter new Phone Number: ")||contact.getPhoneNo;
+        const NewEmail = readlineSync.question("Enter new Email: ")||contact.getEmail;
+        
+        const updatedDetails= new Contact(newFirstName,newLastname,newAddress,newCity,newState,newZip,newPhoneNo,NewEmail);
+        const index = this.addressbook.getAllContacts().indexOf(contact);
+        if(index !=-1){
+            this.addressbook.getAllContacts()[index]=updatedDetails;
+            console.log("Data Edited succefully!");
+        }else {
+            console.log('Failed to update contact.');
+        }
+    } else {
+        console.log('Contact not found.');
+        
+        }
+        
+        }
+
+        private DispslayAllContacts():void{
+            const contact = this.addressbook.getAllContacts();
+            if(contact.length==0){
+                console.log("Contact not found");
+            }else{
+                console.log("Contact Details:");
+                 contact.forEach(contact => {
+                console.log(contact.getDetails());
+            });
+            }
+        }
+  
 
      public start():void{
         while(true){
             console.log("Address Book Menu");
             console.log("1. Add Contact");
-            console.log("2. Exit");     
+            console.log("2. Edit Contact");
+            console.log("3. View All Contacts");
+            console.log("4. Exit");     
             const choice= readlineSync.question("Please enter your choice: ");   
             
             switch(choice){
                 case `1`: this.addContact();
                         break;
-                case `2`: console.log("Exiting the Address Book");
+                case `2`: this.editContact();
+                        break;
+                case `3`: this.DispslayAllContacts();
+                        break;
+                case `4`: console.log("Exiting the Address Book");
                         return;
                 default: console.log("Please enter valid number");
             }

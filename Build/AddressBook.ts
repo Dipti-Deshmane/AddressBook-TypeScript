@@ -53,6 +53,15 @@ class AddressBook{
         });
     };    
 
+    sortContactsByName(): void {
+        this.contact.sort((contactA, contactB) => {
+            const nameA = contactA.toString().toLowerCase();
+            const nameB = contactB.toString().toLowerCase();
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+        });
+    }
 
 
 

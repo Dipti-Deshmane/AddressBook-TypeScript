@@ -133,6 +133,25 @@ class AddressBookMain{
                 });
             }
         }
+        private countContactsByCity(city: string): void {
+            let count = 0;
+            for (const key in this.addressbook) {
+                const addressBook = this.addressbook[key];
+                count += addressBook.searchContactsByCity(city).length;
+            }
+        
+            console.log(`Number of contact persons in ${city}: ${count}`);
+        }
+        private sortContactsAlphabetically(): void {
+            if (!this.currentAddressBook) {
+                console.log('No address book selected.');
+                return;
+            }
+    
+            this.currentAddressBook.sortContactsByName(); // Assuming you have a method to sort contacts by name in AddressBook
+           
+            this.DispslayAllContacts(); // Display the sorted contacts
+        }
 
      public start():void{
         while(true){
@@ -145,7 +164,8 @@ class AddressBookMain{
             console.log("6. View All Contacts");
             console.log("7. Delete Contact");
             console.log("8. Search Contacts by City");
-            console.log("9. Exit");
+            console.log("9. Count of Contacts by City");
+            console.log("10. Exit");
             const choice= readlineSync.question("Please enter your choice: ");   
             
             switch(choice){
@@ -173,7 +193,11 @@ class AddressBookMain{
                 case '8':
                     this.searchContactsByCity();
                     break;
-                case `9`: console.log("Exiting the Address Book");
+                case '9':
+                    const city=readlineSync.question("Please enter city name: ");
+                    this.countContactsByCity(city);
+                    break;
+                case `10`: console.log("Exiting the Address Book");
                         return;
                         
                 default: console.log("Please enter valid number");

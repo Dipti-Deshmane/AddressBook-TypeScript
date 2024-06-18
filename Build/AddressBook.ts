@@ -30,6 +30,9 @@ class AddressBook{
         return null;
     }
 
+    searchContactsByCity(city: string): Contact[] {
+        return this.contact.filter(contact => contact.getCity().toLowerCase() === city.toLowerCase());
+    }
     deleteContact(name:string):boolean{
         const[firstName,lastName]=name.split(" ");
         const index=this.contact.findIndex(contact=>

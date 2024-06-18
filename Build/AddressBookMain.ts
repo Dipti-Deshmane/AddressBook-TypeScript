@@ -112,7 +112,27 @@ class AddressBookMain{
             });
             }
         }
-  
+        private searchContactsByCity(): void {
+            const city = readlineSync.question('Enter city to search: ');
+        
+            const results: Contact[] = [];
+        
+            Object.keys(this.addressbook).forEach(key => {
+                const addressBook = this.addressbook[key];
+                if (city) {
+                    results.push(...addressBook.searchContactsByCity(city));
+                }
+            });
+        
+            if (results.length === 0) {
+                console.log("No contacts found.");
+            } else {
+                console.log("Search Results:");
+                results.forEach(contact => {
+                    console.log(contact.getDetails());
+                });
+            }
+        }
 
      public start():void{
         while(true){
@@ -124,7 +144,8 @@ class AddressBookMain{
             console.log("5. Edit Contact");
             console.log("6. View All Contacts");
             console.log("7. Delete Contact");
-            console.log("8. Exit");
+            console.log("8. Search Contacts by City");
+            console.log("9. Exit");
             const choice= readlineSync.question("Please enter your choice: ");   
             
             switch(choice){
@@ -149,8 +170,10 @@ class AddressBookMain{
                 case '7':
                     this.deleteContact();
                     break;
-            
-                case `8`: console.log("Exiting the Address Book");
+                case '8':
+                    this.searchContactsByCity();
+                    break;
+                case `9`: console.log("Exiting the Address Book");
                         return;
                         
                 default: console.log("Please enter valid number");

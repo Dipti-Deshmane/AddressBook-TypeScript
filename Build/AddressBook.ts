@@ -6,9 +6,14 @@ class AddressBook{
     private contact:Contact[]=[];
     private addressBooks: { [name: string]: AddressBook } = {};
 
-
-    addContact(contact:Contact):void{
-        this.contact.push(contact);
+    addContact(contact: Contact): void {
+        const existingContact = this.searchFirstAndLastName(contact.getFirstName() + " " + contact.getLastName());
+        if (existingContact) {
+            console.log("A contact with the same name already exists.");
+        } else {
+            this.contact.push(contact);
+            console.log("Contact added successfully.");
+        }
     };
 
     getAllContacts():Contact[]{
@@ -39,6 +44,11 @@ class AddressBook{
 
     }
 
+    listContacts():void{
+        this.contact.forEach((contact)=>{
+            console.log(contact.getDetails());
+        });
+    };    
 
 
 

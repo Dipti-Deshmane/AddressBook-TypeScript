@@ -34,27 +34,32 @@ class AddressBookMain{
         }
     }
 
-     private addContact():void{
+    
+    private addContact(): void {
+        if (!this.currentAddressBook) {
+            console.log('No address book selected.');
+            return;
+        }
+
         while (true) {
-        const firstName = readlineSync.question("FirstName: ");
-        const lastName = readlineSync.question("LastName: ");
-        const address = readlineSync.question("Address: ");
-        const city = readlineSync.question("City: ");
-        const state = readlineSync.question("State: ");
-        const zip = readlineSync.question("Zip: ");
-        const phoneNo = readlineSync.question("PhoneNo: ");
-        const email = readlineSync.question("Email: ");
+            const firstName = readlineSync.question("First Name: ");
+            const lastName = readlineSync.question("Last Name: ");
+            const address = readlineSync.question("Address: ");
+            const city = readlineSync.question("City: ");
+            const state = readlineSync.question("State: ");
+            const zip = readlineSync.question("Zip: ");
+            const phoneNo = readlineSync.question("Phone No: ");
+            const email = readlineSync.question("Email: ");
 
-        const contact= new Contact(firstName,lastName,address,city,state,zip,phoneNo,email);
-        this.addressbook.addContact(contact);
-        console.log("Contact saved successfully!");
-        const addAnother = readlineSync.question("Do you want to add another contact? (yes/no): ");
-        if (addAnother.toLowerCase() !== 'yes') {
-            break;
-        }
+            const contact = new Contact(firstName, lastName, address, city, state, zip, phoneNo, email);
+            this.currentAddressBook.addContact(contact);
 
+            const addAnother = readlineSync.question("Do you want to add another contact? (yes/no): ");
+            if (addAnother.toLowerCase() !== 'yes') {
+                break;
+            }
         }
-     }
+    }
     
      private editContact():void{
 

@@ -1,6 +1,7 @@
 import Contact from "./Contact";
 import AddressBook from "./AddressBook";
 import * as readlineSync from 'readline-sync';
+import * as fs from 'fs';
 
 class AddressBookMain{
    
@@ -154,6 +155,46 @@ class AddressBookMain{
             this.DispslayAllContacts(); // Display the sorted contacts
         }
 
+
+        private saveAddressBookToFile(): void {
+            if (!this.currentAddressBook) {
+                console.log('No address book selected.');
+                return;
+            }
+            const filename = readlineSync.question('Enter the filename to save the address book: ');
+            const data = JSON.stringify(this.currentAddressBook.getAllContacts());
+            fs.writeFileSync(filename, data);
+            console.log(`Address book saved to file ${filename}`);
+        }
+    
+        private loadAddressBookFromFile(): void {
+            const filename = readlineSync.question('Enter the filename to load the address book: ');
+            try {
+                const data = fs.readFileSync(filename, 'utf8');
+                const parsedData = JSON.parse(data);
+                if (parsedData && Array.isArray(parsedData)) {
+                    this.currentAddressBook = new AddressBook();
+                    const contacts = parsedData.map((contactData: any) => new Contact(
+                        contactData.firstName,
+                        contactData.lastName,
+                        contactData.address,
+                        contactData.city,
+                        contactData.state,
+                        contactData.zip,
+                        contactData.contactNo,
+                        contactData.email
+                    ));
+                    this.currentAddressBook.setContacts(contacts);
+                    console.log('Address book loaded from file successfully.');
+                } else {
+                    console.log('Invalid data format in file.');
+                }
+            } catch (err) {
+                console.error('Error loading address book from file:', err);
+            }
+        }
+    
+
      public start():void{
         while(true){
             console.log("\nAddress Book Menu:");
@@ -198,11 +239,18 @@ class AddressBookMain{
                     const city=readlineSync.question("Please enter city name: ");
                     this.countContactsByCity(city);
                     break;
-                case `10`: console.log("Exiting the Address Book");
-                        return;
-                        
-                default: console.log("Please enter valid number");
-            }
+                case '10':
+                    this.saveAddressBookToFile();
+                    break;
+                case '11':
+                    this.loadAddressBookFromFile();
+                    break;
+                case '12':
+                    console.log("Exiting the Address Book.");
+                    return;
+                default:
+                    console.log("Invalid choice. Please try again.");
+                }
 
         }
      }

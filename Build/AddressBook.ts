@@ -1,6 +1,7 @@
 
 import Contact from "./Contact";
 
+
 class AddressBook{
 
     private contact:Contact[]=[];
@@ -72,6 +73,14 @@ class AddressBook{
             return 0;
         });
     }
+    public setContacts(contacts: Contact[]): void {
+        this.contact = contacts;
+    }
+
+    public getContacts(): Contact[] {
+        return this.contact;
+    }
+
 
 
 }

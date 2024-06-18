@@ -4,6 +4,8 @@ import Contact from "./Contact";
 class AddressBook{
 
     private contact:Contact[]=[];
+    private addressBooks: { [name: string]: AddressBook } = {};
+
 
     addContact(contact:Contact):void{
         this.contact.push(contact);

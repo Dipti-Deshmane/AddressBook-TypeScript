@@ -5,6 +5,34 @@ import * as readlineSync from 'readline-sync';
 class AddressBookMain{
    
      private addressbook = new AddressBook();
+     private currentAddressBook: AddressBook | null = null;
+
+     private createAddressBook(): void {
+        const name = readlineSync.question('Enter the name of the new address book: ');
+        if (this.addressbook[name]) {
+            console.log('An address book with this name already exists.');
+        } else {
+            this.addressbook[name] = new AddressBook();
+            console.log('Address book created successfully.');
+        }
+    }
+
+    private selectAddressBook(): void {
+        const name = readlineSync.question('Enter the name of the address book to select: ');
+        if (this.addressbook[name]) {
+            this.currentAddressBook = this.addressbook[name];
+            console.log(`Address book "${name}" selected.`);
+        } else {
+            console.log('Address book not found.');
+        }
+    }
+
+    private listAddressBooks(): void {
+        console.log('Available address books:');
+        for (const name in this.addressbook) {
+            console.log(name);
+        }
+    }
 
      private addContact():void{
         while (true) {
@@ -83,27 +111,43 @@ class AddressBookMain{
 
      public start():void{
         while(true){
-            console.log("Address Book Menu");
-            console.log("1. Add Contact");
-            console.log("2. Edit Contact");
-            console.log("3. View All Contacts");
-            console.log("4. Delete Contact");
-            console.log("5. Exit");     
+            console.log("\nAddress Book Menu:");
+            console.log("1. Create Address Book");
+            console.log("2. Select Address Book");
+            console.log("3. List Address Books");
+            console.log("4. Add Contact");
+            console.log("5. Edit Contact");
+            console.log("6. View All Contacts");
+            console.log("7. Delete Contact");
+            console.log("8. Exit");
             const choice= readlineSync.question("Please enter your choice: ");   
             
             switch(choice){
-                case `1`: this.addContact();
-                        break;
-                case `2`: this.editContact();
-                        break;
-                case `3`: this.DispslayAllContacts();
-                        break;
-                case `4`: this.deleteContact();
-                        break;
-                case `5`: console.log("Exiting the Address Book");
+                case '1':
+                    this.createAddressBook();
+                    break;
+                case '2':
+                    this.selectAddressBook();
+                    break;
+                case '3':
+                    this.listAddressBooks();
+                    break;
+                case '4':
+                    this.addContact();
+                    break;
+                case '5':
+                    this.editContact();
+                    break;
+                case '6':
+                    this.DispslayAllContacts();
+                    break;
+                case '7':
+                    this.deleteContact();
+                    break;
+            
+                case `8`: console.log("Exiting the Address Book");
                         return;
                         
-
                 default: console.log("Please enter valid number");
             }
 

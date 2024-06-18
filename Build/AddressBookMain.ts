@@ -52,6 +52,16 @@ class AddressBookMain{
         
         }
 
+        private deleteContact():void{
+            const name = readlineSync.question("Please enter first and last name to delete: ");
+            const success = this.addressbook.deleteContact(name);
+            if (success) {
+                console.log("Contact deleted successfully!");
+            } else {
+                console.log("Contact not found.");
+            }
+        }
+
         private DispslayAllContacts():void{
             const contact = this.addressbook.getAllContacts();
             if(contact.length==0){
@@ -71,7 +81,8 @@ class AddressBookMain{
             console.log("1. Add Contact");
             console.log("2. Edit Contact");
             console.log("3. View All Contacts");
-            console.log("4. Exit");     
+            console.log("4. Delete Contact");
+            console.log("5. Exit");     
             const choice= readlineSync.question("Please enter your choice: ");   
             
             switch(choice){
@@ -81,8 +92,12 @@ class AddressBookMain{
                         break;
                 case `3`: this.DispslayAllContacts();
                         break;
-                case `4`: console.log("Exiting the Address Book");
+                case `4`: this.deleteContact();
+                        break;
+                case `5`: console.log("Exiting the Address Book");
                         return;
+                        
+
                 default: console.log("Please enter valid number");
             }
 

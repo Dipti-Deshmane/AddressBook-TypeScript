@@ -22,6 +22,22 @@ class AddressBook{
         return null;
     }
 
+    deleteContact(name:string):boolean{
+        const[firstName,lastName]=name.split(" ");
+        const index=this.contact.findIndex(contact=>
+            contact.getFirstName()===firstName && contact.getLastName()===lastName);
+            if(index!==-1){
+                this.contact.splice(index,1);
+                return true;
+            }else{
+                return false;
+            }
+        
+
+    }
+
+
+
 
 
 }

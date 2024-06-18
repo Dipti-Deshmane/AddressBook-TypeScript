@@ -4,9 +4,10 @@ import * as readlineSync from 'readline-sync';
 
 class AddressBookMain{
    
-     addressbook = new AddressBook();
+     private addressbook = new AddressBook();
 
      private addContact():void{
+        while (true) {
         const firstName = readlineSync.question("FirstName: ");
         const lastName = readlineSync.question("LastName: ");
         const address = readlineSync.question("Address: ");
@@ -19,7 +20,12 @@ class AddressBookMain{
         const contact= new Contact(firstName,lastName,address,city,state,zip,phoneNo,email);
         this.addressbook.addContact(contact);
         console.log("Contact saved successfully!");
+        const addAnother = readlineSync.question("Do you want to add another contact? (yes/no): ");
+        if (addAnother.toLowerCase() !== 'yes') {
+            break;
+        }
 
+        }
      }
     
      private editContact():void{

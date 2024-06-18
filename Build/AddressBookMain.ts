@@ -145,11 +145,12 @@ class AddressBookMain{
         private sortContactsAlphabetically(): void {
             if (!this.currentAddressBook) {
                 console.log('No address book selected.');
+    
                 return;
             }
     
-            this.currentAddressBook.sortContactsByName(); // Assuming you have a method to sort contacts by name in AddressBook
-           
+            this.currentAddressBook.sortContactsByName(); 
+            this.currentAddressBook.sortContactByCity();
             this.DispslayAllContacts(); // Display the sorted contacts
         }
 
@@ -185,7 +186,7 @@ class AddressBookMain{
                     this.editContact();
                     break;
                 case '6':
-                    this.DispslayAllContacts();
+                    this.sortContactsAlphabetically();
                     break;
                 case '7':
                     this.deleteContact();
